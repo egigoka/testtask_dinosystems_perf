@@ -28,20 +28,23 @@
       <hashTree>
         <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="BeanShell Sampler" enabled="true">
           <stringProp name="BeanShellSampler.query">import org.apache.http.HttpResponse;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.client.config.RequestConfig;
+//import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.client.HttpClient;
+//import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 
-int timeout = 30000;
+//int timeout = 30000;
 
-RequestConfig config = RequestConfig.custom()
-  .setConnectTimeout(timeout)
-  .setConnectionRequestTimeout(timeout)
-  .setSocketTimeout(timeout).build();
-CloseableHttpClient httpClient = 
-  HttpClientBuilder.create().setDefaultRequestConfig(config).build();
+//RequestConfig config = RequestConfig.custom()
+//  .setConnectTimeout(timeout)
+//  .setConnectionRequestTimeout(timeout)
+//  .setSocketTimeout(timeout).build();
+//CloseableHttpClient httpClient = 
+//  HttpClientBuilder.create().setDefaultRequestConfig(config).build();
+
+HttpClient httpClient = HttpClientBuilder.create().build();
 
 HttpGet request = new HttpGet(&quot;http://127.0.0.1:8080/&quot;);
 HttpResponse response = httpClient.execute(request);
@@ -127,7 +130,7 @@ SampleResult.setResponseData(res);</stringProp>
               <connectTime>true</connectTime>
             </value>
           </objProp>
-          <stringProp name="filename"></stringProp>
+          <stringProp name="filename">/py/testtask_dinosystems_perf/results/BeanShellSampler.jtl</stringProp>
         </ResultCollector>
         <hashTree/>
       </hashTree>

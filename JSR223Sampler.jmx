@@ -63,7 +63,58 @@
           <stringProp name="filename"></stringProp>
         </ResultCollector>
         <hashTree/>
-        <ResultCollector guiclass="GraphVisualizer" testclass="ResultCollector" testname="Graph Results" enabled="true">
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler" enabled="true">
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="script">import org.apache.http.HttpHeaders;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.methods.RequestBuilder;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
+
+
+
+List&lt;String&gt; sendGet(String url) {
+
+        
+        RequestConfig requestConfig = RequestConfig.custom()
+                //.setConnectTimeout(30000)
+                //.setSocketTimeout(30000)
+                .build();
+
+        RequestBuilder requestBuilder = RequestBuilder.get()
+                .setConfig(requestConfig)
+                .setUri(url)
+                .setHeader(HttpHeaders.CONTENT_TYPE, &quot;application/json;charset=UTF-8&quot;);
+        
+        HttpUriRequest request = requestBuilder.build();
+
+        String req = &quot;&gt;&gt;&gt;REQUEST:&quot; + &quot;\n&quot; + request.getRequestLine() + &quot;\n&quot; + &quot;Headers: &quot; +
+                request.getAllHeaders() + &quot;\n&quot;;
+
+        HttpClientBuilder.create().build().withCloseable {httpClient -&gt;
+
+            httpClient.execute(request).withCloseable {response -&gt;
+
+                String res = &quot;&gt;&gt;&gt;RESPONSE:&quot; + &quot;\n&quot; + response.getStatusLine() + &quot;\n&quot; + &quot;Headers: &quot; +
+                        response.getAllHeaders() + &quot;\n&quot; +
+                        (response.getEntity() != null ? EntityUtils.toString(response.getEntity()) : &quot;&quot;) + &quot;\n&quot;;
+
+                SampleResult.setResponseData(req + &quot;\n&quot;  + res );
+                return Arrays.asList(req, res);
+            }
+        }
+    }
+
+List test1 = sendGet(&quot;http://127.0.0.1:8080/index.html&quot;);
+log.info(Arrays.toString(test1));
+</stringProp>
+          <stringProp name="scriptLanguage">groovy</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+        <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
           <objProp>
             <name>saveConfig</name>
@@ -97,59 +148,8 @@
               <connectTime>true</connectTime>
             </value>
           </objProp>
-          <stringProp name="filename"></stringProp>
+          <stringProp name="filename">/py/testtask_dinosystems_perf/results/JSR223Sampler.jtl</stringProp>
         </ResultCollector>
-        <hashTree/>
-        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler" enabled="true">
-          <stringProp name="cacheKey">true</stringProp>
-          <stringProp name="filename"></stringProp>
-          <stringProp name="parameters"></stringProp>
-          <stringProp name="script">import org.apache.http.HttpHeaders;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.client.methods.RequestBuilder;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.util.EntityUtils;
-
-
-
-List&lt;String&gt; sendGet(String url) {
-
-        
-        RequestConfig requestConfig = RequestConfig.custom()
-                .setConnectTimeout(30000)
-                .setSocketTimeout(30000)
-                .build();
-
-        RequestBuilder requestBuilder = RequestBuilder.get()
-                .setConfig(requestConfig)
-                .setUri(url)
-                .setHeader(HttpHeaders.CONTENT_TYPE, &quot;application/json;charset=UTF-8&quot;);
-        
-        HttpUriRequest request = requestBuilder.build();
-
-        String req = &quot;&gt;&gt;&gt;REQUEST:&quot; + &quot;\n&quot; + request.getRequestLine() + &quot;\n&quot; + &quot;Headers: &quot; +
-                request.getAllHeaders() + &quot;\n&quot;;
-
-        HttpClientBuilder.create().build().withCloseable {httpClient -&gt;
-
-            httpClient.execute(request).withCloseable {response -&gt;
-
-                String res = &quot;&gt;&gt;&gt;RESPONSE:&quot; + &quot;\n&quot; + response.getStatusLine() + &quot;\n&quot; + &quot;Headers: &quot; +
-                        response.getAllHeaders() + &quot;\n&quot; +
-                        (response.getEntity() != null ? EntityUtils.toString(response.getEntity()) : &quot;&quot;) + &quot;\n&quot;;
-
-                SampleResult.setResponseData(req + &quot;\n&quot;  + res );
-                return Arrays.asList(req, res);
-            }
-        }
-    }
-
-List test1 = sendGet(&quot;http://127.0.0.1:8080/index.html&quot;);
-log.info(Arrays.toString(test1));
-</stringProp>
-          <stringProp name="scriptLanguage">groovy</stringProp>
-        </JSR223Sampler>
         <hashTree/>
       </hashTree>
     </hashTree>
