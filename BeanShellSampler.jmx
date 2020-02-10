@@ -50,7 +50,6 @@ String res = &quot;&gt;&gt;&gt;RESPONSE&quot; + &quot;\n&quot; + response.getSta
              response.getAllHeaders() + &quot;\n&quot; +
              (response.getEntity() != null ? EntityUtils.toString(response.getEntity()) : &quot;&quot;) + &quot;\n&quot;;
 
-System.out.println(res);  // del
 SampleResult.setResponseData(res);</stringProp>
           <stringProp name="BeanShellSampler.filename"></stringProp>
           <stringProp name="BeanShellSampler.parameters"></stringProp>
